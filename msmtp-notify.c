@@ -125,6 +125,26 @@ int main(int argc, char **argv)
 					p = strtok(NULL, " ");
 					if(!p)
 						break;
+					if (!strncmp(p, "recipients=", 11) && strlen(p) > 11){
+						strncpy(rcpt, p+11, RCPT_LEN - 6); // copy what is after the '=' sign
+
+						// if there is more than 1 rcpt, then they are listed, comma separated,
+						// after the '='. The while loop detects this and deletes all but the 
+						// **first** rcpt, replacing the remaining with ' ... '.
+						char* c = rcpt;
+						while(*c) {
+							if(*c == ',') {
+								*(c+1)=' ';
+								*(c+2)='.';
+								*(c+3)='.';
+								*(c+4)='.';
+								*(c+5)=' ';
+								*(c+6)='\0';
+								break;
+							} else
+								c++;
+						} // end rcpt parsing
+					}
 					if (!strncmp(p, "exitcode=EX_OK", 14))
 						success = 1;
 					if (!strncmp(p, "recipients=", 11)){
