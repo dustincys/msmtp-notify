@@ -147,9 +147,6 @@ int main(int argc, char **argv)
 					}
 					if (!strncmp(p, "exitcode=EX_OK", 14))
 						success = 1;
-					if (!strncmp(p, "recipients=", 11)){
-						strncpy(rcpt, p+11, strlen(p)-11);
-					}
 				}
 				// exit status is in int success and rcpt in char[] rcpt.
 
